@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Logged Out</title>
+    <style>
+        /* Global styles */
+        body {
+            background-color: #95c7cd;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Main content styles */
+        .logout-message {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .logout-message h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .logout-message a {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .logout-message a:hover {
+            background-color: #0056b3;
+        }
+
+        /* Footer styles */
+        .site-footer {
+            background-color: #343a40;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .footer-container p {
+            margin: 0;
+        }
+    </style>
+    <script>
+        // JavaScript for interactive elements (if any)
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page loaded');
+        });
+    </script>
+</head>
+
+<body>
+<div class="logout-message">
+    <h1>You have been Logged Out</h1>
+    <a th:href="@{/}">Home</a>
+</div>
+
+<footer class="site-footer" id="siteFooter">
+    <div class="footer-container">
+        <p>&copy; Personal Blog 2023</p>
+    </div>
+</footer>
+</body>
+
+</html>

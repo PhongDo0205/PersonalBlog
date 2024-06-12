@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Successfully Created</title>
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        /* accountSuccess */
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .alert-container {
+            margin-top: 20px;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+            padding: 20px;
+            border-radius: 4px;
+        }
+
+        .success-message {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .btn-return-login {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        .btn-return-login:hover {
+            background-color: #0056b3;
+            text-decoration: none;
+        }
+        /* footer.css */
+        .site-footer {
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #343a40;
+            color: #faf7f7;
+            padding: 10px 0;
+            text-align: left;
+        }
+
+        .site-footer .footer-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .site-footer .footer-column {
+            flex: 1;
+            padding: 10px;
+        }
+
+        .site-footer .footer-column h5 {
+            margin-bottom: 15px;
+            font-size: 1.25rem;
+        }
+
+        .site-footer .footer-column p {
+            margin: 0;
+        }
+
+        .site-footer .footer-column a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .site-footer .footer-column a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container alert-container">
+    <div class="alert alert-success" role="alert">
+        <h1 class="success-message">Congratulations, Your Account <span th:text="${username}"></span> Has Been
+            Successfully Created</h1>
+        <a th:href="@{/login}" id="return-to-login" role="button" class="btn btn-primary btn-return-login">Return to Login Page</a>
+    </div>
+</div>
+<footer class="site-footer" id="myFooter">
+    <div class="container footer-container">
+        <div class="footer-column">
+            <h5>Thông tin người thiết kế</h5>
+            <p>Tên: Đỗ Trung Phong</p>
+            <p>Email: <a href="mailto:2002phong2002@gmail.com">2002phong2002@gmail.com</a></p>
+        </div>
+        <div class="footer-column">
+            <h5>Chức năng của trang</h5>
+            <p>Tạo bài viết</p>
+            <p>Comment bài viết</p>
+        </div>
+    </div>
+</footer>
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>

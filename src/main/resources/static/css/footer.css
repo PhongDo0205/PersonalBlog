@@ -1,0 +1,35 @@
+/* footer.css */
+.site-footer {
+    background-color: #343a40;
+    color: #fff;
+    padding: 20px 0;
+}
+
+.site-footer .footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.site-footer .footer-column {
+    flex: 1;
+    padding: 10px;
+}
+
+.site-footer .footer-column h5 {
+    margin-bottom: 15px;
+    font-size: 1.25rem;
+}
+
+.site-footer .footer-column p {
+    margin: 0;
+}
+
+.site-footer .footer-column a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.site-footer .footer-column a:hover {
+    text-decoration: underline;
+}

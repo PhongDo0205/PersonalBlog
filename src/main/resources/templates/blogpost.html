@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Blog Post</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      background-color: #f4f4f4;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Navbar CSS */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #343a40;
+      padding: 10px 20px;
+    }
+
+    .navbar .brand {
+      color: #fff;
+      font-size: 1.5rem;
+      text-decoration: none;
+    }
+
+    .navbar .nav-links {
+      display: flex;
+      gap: 10px;
+    }
+
+    .navbar .nav-links a,
+    .navbar .nav-links form input[type="submit"] {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .navbar .nav-links a:hover,
+    .navbar .nav-links form input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    /* Main Content CSS */
+    .main-content {
+      background-color: #d4c9c9;
+      padding: 20px;
+      margin: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .main-content .form-group {
+      margin-bottom: 15px;
+    }
+
+    .main-content label {
+      font-size: 1.2rem;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .main-content input,
+    .main-content textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .main-content button {
+      background-color: #56ea74;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .main-content button:hover {
+      background-color: #45d063;
+    }
+
+    /* Footer CSS */
+    .site-footer {
+      background-color: #343a40;
+      color: #fff;
+      padding: 20px 0;
+    }
+
+    .footer-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .footer-column {
+      flex: 1;
+      padding: 10px;
+    }
+
+    .footer-column h5 {
+      margin-bottom: 15px;
+      font-size: 1.25rem;
+    }
+
+    .footer-column p {
+      margin: 0;
+    }
+
+    .footer-column a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .footer-column a:hover {
+      text-decoration: underline;
+    }
+  </style>
+  <script>
+    // JavaScript for interactive elements
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.querySelector('.main-content form');
+
+      form.addEventListener('submit', function(event) {
+        if (!confirm('Are you sure you want to submit this post?')) {
+          event.preventDefault();
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+<nav class="navbar">
+  <a class="brand" th:href="@{/}">[[${blogname}]]<span sec:authorize="isAuthenticated()"> | Welcome [[${username}]]</span></a>
+  <div class="nav-links">
+    <div sec:authorize="hasRole('ADMIN')">
+      <a th:href="@{/admin}" role="button">Admin Panel</a>
+    </div>
+    <div sec:authorize="hasRole('ADMIN') or hasRole('USER')">
+      <a th:href="@{/blog/create}" role="button">Create Post</a>
+      <a th:href="@{/profile}" role="button">My Profile</a>
+      <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Logout" role="button"/>
+        <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+      </form>
+    </div>
+    <div sec:authorize="isAnonymous()">
+      <a th:href="@{/login}" role="button">Sign In</a>
+      <a th:href="@{/user/create}" role="button">Create Account</a>
+    </div>
+  </div>
+</nav>
+
+<div class="main-content">
+  <form th:action="@{/blog/create}" method="post" th:object="${blog}">
+    <div class="form-group">
+      <label for="title">Enter Title</label>
+      <input type="text" id="title" th:field="*{title}" class="form-control" placeholder="Title"/>
+    </div>
+    <div class="form-group">
+      <label for="content">Enter Content</label>
+      <textarea id="content" th:field="*{content}" class="form-control" placeholder="Content" rows="5"></textarea>
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-column">
+      <h5>Thông tin người thiết kế</h5>
+      <p>Tên: Đỗ Trung Phong</p>
+      <p>Email: <a href="mailto:2002phong2002@gmail.com">2002phong2002@gmail.com</a></p>
+    </div>
+    <div class="footer-column">
+      <h5>Chức năng của trang</h5>
+      <p>Tạo bài viết</p>
+      <p>Comment bài viết</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

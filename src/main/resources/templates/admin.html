@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      background-color: #f4f4f4;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Navbar CSS */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #343a40;
+      padding: 10px 20px;
+    }
+
+    .navbar .brand {
+      color: #fff;
+      font-size: 1.5rem;
+      text-decoration: none;
+    }
+
+    .navbar .nav-links {
+      display: flex;
+      gap: 10px;
+    }
+
+    .navbar .nav-links a,
+    .navbar .nav-links form input[type="submit"] {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .navbar .nav-links a:hover,
+    .navbar .nav-links form input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    /* Main Content CSS */
+    .main-content {
+      background-color: #9dda98;
+      padding: 20px;
+      text-align: center;
+      font-size: 25px;
+    }
+
+    .main-content table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .main-content th,
+    .main-content td {
+      padding: 15px;
+      border: 1px solid #ddd;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 1rem;
+    }
+
+    .main-content th {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .main-content .action a {
+      color: #007bff;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .main-content .action a:hover {
+      text-decoration: underline;
+    }
+
+    /* Footer CSS */
+    .site-footer {
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #343a40;
+      color: #faf7f7;
+      padding: 10px 0;
+      text-align: left;
+    }
+
+    .footer-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .footer-column {
+      flex: 1;
+      padding: 10px;
+    }
+
+    .footer-column h5 {
+      margin-bottom: 15px;
+      font-size: 1.25rem;
+    }
+
+    .footer-column p {
+      margin: 0;
+    }
+
+    .footer-column a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .footer-column a:hover {
+      text-decoration: underline;
+    }
+  </style>
+  <script>
+    // JavaScript for interactive elements
+    document.addEventListener('DOMContentLoaded', function() {
+      const actionLinks = document.querySelectorAll('.main-content .action a');
+
+      actionLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+          if (!confirm('Are you sure you want to perform this action?')) {
+            event.preventDefault();
+          }
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+<nav class="navbar">
+  <a class="brand" th:href="@{/}">ADMIN PANEL<span sec:authorize="isAuthenticated()"> | Welcome to Admin Panel</span></a>
+  <div class="nav-links">
+    <div sec:authorize="hasRole('ADMIN')">
+      <a th:href="@{/admin}" role="button">Admin Panel</a>
+    </div>
+    <div sec:authorize="hasRole('ADMIN') or hasRole('USER')">
+      <a th:href="@{/blog/create}" role="button">Create Post</a>
+      <a th:href="@{/profile}" role="button">My Profile</a>
+      <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Logout" role="button"/>
+        <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+      </form>
+    </div>
+    <div sec:authorize="isAnonymous()">
+      <a th:href="@{/login}" role="button">Sign In</a>
+      <a th:href="@{/user/create}" role="button">Create Account</a>
+    </div>
+  </div>
+</nav>
+
+<div class="main-content">
+  <h2>Admin Panel</h2>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>User Name</th>
+      <th>Email</th>
+      <th>Blog Name</th>
+      <th>Enabled</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+      <td th:text="${user.username}">Username</td>
+      <td th:text="${user.email}">Email</td>
+      <td th:text="${user.blogname}">Blog Name</td>
+      <td th:text="${user.enabled}">Enabled</td>
+      <td class="action">
+        <a th:if="${user.enabled}" th:href="@{/admin/user/suspend/{username}(username=${user.username})}">Suspend User</a>
+        <a th:unless="${user.enabled}" th:href="@{/admin/user/enable/{username}(username=${user.username})}">Enable User</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-column">
+      <h5>Thông tin người thiết kế</h5>
+      <p>Tên: Đỗ Trung Phong</p>
+      <p>Email: <a href="mailto:2002phong2002@gmail.com">2002phong2002@gmail.com</a></p>
+    </div>
+    <div class="footer-column">
+      <h5>Chức năng của trang</h5>
+      <p>Tạo bài viết</p>
+      <p>Comment bài viết</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

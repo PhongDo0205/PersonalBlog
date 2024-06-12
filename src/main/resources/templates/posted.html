@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blog Post Success</title>
+    <style>
+        /* Global styles */
+        body {
+            background-color: #cae7db;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Main content styles */
+        .main-content {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .main-content h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .main-content p {
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1rem;
+            display: inline-block;
+            margin: 5px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        /* Footer styles */
+        .site-footer {
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #343a40;
+            color: #fff;
+            padding: 20px 0;
+            text-align: left;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .footer-column {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .footer-column h5 {
+            margin-bottom: 15px;
+            font-size: 1.25rem;
+        }
+
+        .footer-column p {
+            margin: 0;
+        }
+
+        .footer-column a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .footer-column a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+
+<body>
+<div class="main-content">
+    <h1>You have successfully Posted [[${blogtitle}]] to Your Blog [[${blogname}]]</h1>
+    <h1 th:text="${blogtitle}"></h1>
+    <p th:text="${blogcontent}"></p>
+    <a th:href="@{/}" role="button" class="btn btn-primary">Return to Home Page</a>
+    <a th:href="@{/profile}" role="button" class="btn btn-primary">Go to Profile Page</a>
+</div>
+
+
+<footer class="site-footer" id="myFooter">
+    <div class="container footer-container">
+        <div class="footer-column">
+            <h5>Thông tin người thiết kế</h5>
+            <p>Tên: Đỗ Trung Phong</p>
+            <p>Email: <a href="mailto:2002phong2002@gmail.com">2002phong2002@gmail.com</a></p>
+        </div>
+        <div class="footer-column">
+            <h5>Chức năng của trang</h5>
+            <p>Tạo bài viết</p>
+        </div>
+    </div>
+</footer>
+</body>
+
+</html>

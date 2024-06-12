@@ -1,0 +1,35 @@
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.alert-container {
+    margin-top: 20px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+.success-message {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.btn-return-login {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.btn-return-login:hover {
+    background-color: #0056b3;
+    text-decoration: none;
+}

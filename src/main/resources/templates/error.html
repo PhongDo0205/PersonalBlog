@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Error page" />
+    <meta name="author" content="Your Name" />
+    <title>401 Error - Your Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #errorContent {
+            text-align: center;
+        }
+
+        .errorMessage {
+            padding: 20px;
+        }
+
+        .errorCode {
+            font-size: 6rem;
+            color: #dc3545;
+        }
+
+        .errorLead {
+            font-size: 1.5rem;
+            color: #6c757d;
+        }
+
+        .errorDescription {
+            margin-top: 10px;
+            font-size: 1rem;
+            color: #6c757d;
+        }
+
+        .backToDashboardLink {
+            margin-top: 20px;
+            display: inline-block;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .backToDashboardLink:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            background-color: #e9ecef;
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            position: absolute;
+            bottom: 0;
+        }
+
+        .footerLinks .footerLink {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .footerLinks .footerLink:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div id="errorContent">
+    <div class="errorMessage text-center mt-4">
+        <h1 class="errorCode display-1">401</h1>
+        <p class="errorLead lead">Unauthorized</p>
+        <p class="errorDescription">Access to this resource is denied.</p>
+        <a href="/" class="backToDashboardLink">
+            <i class="fas fa-arrow-left me-1"></i>
+            Return to Homepage
+        </a>
+    </div>
+</div>
+<footer class="footer">
+    <div class="container-fluid px-4">
+        <div class="d-flex align-items-center justify-content-center small">
+            <div class="text-muted">&copy; Personal Blog 2023</div>
+            <div class="footerLinks mx-3">
+                <a href="#" class="footerLink">Privacy Policy</a>
+                &middot;
+                <a href="#" class="footerLink">Terms &amp; Conditions</a>
+            </div>
+        </div>
+    </div>
+</footer>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Error page loaded');
+    });
+</script>
+</body>
+</html>

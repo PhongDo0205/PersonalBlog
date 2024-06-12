@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post | [[${blogID.title}]]</title>
+    <style>
+        /* Global styles */
+        body {
+            background-color: #d3f1e1;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #343a40;
+            padding: 10px 20px;
+        }
+
+        .navbar .brand {
+            color: #fff;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .navbar .nav-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .navbar .nav-links a,
+        .navbar .nav-links form input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .navbar .nav-links a:hover,
+        .navbar .nav-links form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* Main content styles */
+        .main-content {
+            padding: 20px;
+        }
+
+        .post-header {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .post-header h1 {
+            color: #333;
+        }
+
+        .post-header p {
+            color: #666;
+        }
+
+        .post-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .post-controls .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .post-controls .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .post-controls .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .post-controls .btn-secondary {
+            background-color: #6c757d;
+            color: #fff;
+        }
+
+        .post-controls .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .edit-form {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            display: none;
+        }
+
+        .comment-form {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .edit-form .form-group,
+        .comment-form .form-group {
+            margin-bottom: 15px;
+        }
+
+        .edit-form label,
+        .comment-form label {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .edit-form input,
+        .edit-form textarea,
+        .comment-form input,
+        .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .edit-form button,
+        .comment-form button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .edit-form button:hover,
+        .comment-form button:hover {
+            background-color: #218838;
+        }
+
+        /* Comment styles */
+        .comments-section {
+            margin-top: 40px;
+        }
+
+        .comment-item {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .comment-item h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .comment-item p {
+            color: #666;
+        }
+
+        /* Footer styles */
+        .site-footer {
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #343a40;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .footer-column {
+            flex: 1;
+            padding: 10px;
+        }
+
+        .footer-column h5 {
+            margin-bottom: 15px;
+            font-size: 1.25rem;
+        }
+
+        .footer-column p {
+            margin: 0;
+        }
+
+        .footer-column a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .footer-column a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script th:inline="javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            const editButton = document.getElementById('editButton');
+            const hideButton = document.getElementById('hideButton');
+            const editForm = document.getElementById('editForm');
+
+
+            hideButton.style.display = 'none';
+            editButton.addEventListener('click', function () {
+                editForm.style.display = 'block';
+                editButton.style.display = 'none';
+                hideButton.style.display = 'inline-block';
+            });
+
+            hideButton.addEventListener('click', function () {
+                editForm.style.display = 'none';
+                editButton.style.display = 'inline-block';
+                hideButton.style.display = 'none';
+            });
+
+            // const commentButton = document.getElementById('commentButton');
+            // const commentForm = document.getElementById('commentForm');
+            // commentForm.style.display = 'none';
+            //
+            // commentButton.addEventListener('click', function () {
+            //     commentForm.style.display = 'block';
+            // });
+        });
+    </script>
+
+</head>
+
+<body>
+<nav class="navbar">
+    <a class="brand" th:href="@{/}">
+        <span th:if="${blogname == null or blogname == ''}">Personal Blog | Welcome</span>
+        <span th:if="${blogname != null and blogname != ''}" th:text="${blogname + ' | Welcome ' + (username != null ? username : '')}"></span>
+    </a>
+    <div class="nav-links">
+        <div sec:authorize="hasRole('ADMIN')">
+            <a th:href="@{/admin}" role="button">Admin Panel</a>
+        </div>
+        <div sec:authorize="hasRole('ADMIN') or hasRole('USER')">
+            <a th:href="@{/blog/create}" role="button">Create Post</a>
+            <a th:href="@{/profile}" role="button">My Profile</a>
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" value="Logout" role="button"/>
+                <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            </form>
+        </div>
+        <div sec:authorize="isAnonymous()">
+            <a th:href="@{/login}" role="button">Sign In</a>
+            <a th:href="@{/user/create}" role="button">Create Account</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container main-content">
+    <div class="post-header">
+        <div th:if="${blogID}">
+            <h1 th:text="${blogID.title}"></h1>
+            <p th:text="${blogID.content}"></p>
+            <p th:text="'Written by: ' + ${blogUsername}"></p>
+            <div th:if="${blogUsername == username}">
+                <div class="post-controls">
+                    <button id="editButton" class="btn btn-primary">Edit</button>
+                    <button id="hideButton" class="btn btn-secondary">Hide</button>
+                </div>
+                <form id="editForm" th:action="@{'/blog/' + ${blogUsername} + '/' + ${blogID.id}  + '/edit'}" th:object="${editedBlog}" method="POST" class="edit-form">
+                    <div class="form-group">
+                        <label for="editTitle">Update Title</label>
+                        <input th:field="*{title}" id="editTitle" class="form-control" placeholder="Title" />
+                    </div>
+                    <div class="form-group">
+                        <label for="editContent">Update Content</label>
+                        <textarea th:field="*{content}" id="editContent" class="form-control" placeholder="Content"></textarea>
+                    </div>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="comments-section">
+        <div class="comment-item" th:each="comment : ${comments}">
+            <h3 th:text="${usernameMap[comment.userid]} + ' says:'"></h3>
+            <p th:text="${#dates.format(comment.datetime, 'dd/MM/yyyy HH:mm')}"></p>
+            <p th:text="${comment.comment}"></p>
+        </div>
+    </div>
+
+    <div>
+<!--        <button id="commentButton" class="btn btn-primary">Comment</button>-->
+        <form id="commentForm" th:action="@{'/blog/' + ${blogUsername} + '/' + ${blogID.id} + '/comment'}" th:object="${newcomment}" method="POST" class="comment-form">
+            <div class="form-group">
+                <label for="commentContent">Enter Comment</label>
+                <textarea th:field="*{comment}" id="commentContent" class="form-control" placeholder="Enter Comment Here"></textarea>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+</div>
+
+<footer class="site-footer" id="myFooter">
+    <div class="container footer-container">
+        <div class="footer-column">
+            <h5>Thông tin người thiết kế</h5>
+            <p>Tên: Đỗ Trung Phong</p>
+            <p>Email: <a href="mailto:2002phong2002@gmail.com">2002phong2002@gmail.com</a></p>
+        </div>
+        <div class="footer-column">
+            <h5>Chức năng của trang</h5>
+            <p>Tạo bài viết</p>
+        </div>
+    </div>
+</footer>
+</body>
+
+</html>
+
