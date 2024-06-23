@@ -20,7 +20,7 @@ PersonalBlog provides basic features of a personal blog application, including:
 1. Clone the repository to your local machine:
     ```sh
     git clone git@github.com:PhongDo0205/PersonalBlog.git
-    cd to PersonalBlog
+    cd  {your path}/PersonalBlog
     ```
 
 3. Configure the database in `application.properties`:
