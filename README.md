@@ -22,11 +22,11 @@ PersonalBlog provides basic features of a personal blog application, including:
     git clone git@github.com:PhongDo0205/PersonalBlog.git
     ```
 
-3. Configure the database in `application.properties`:
-    ```properties
-    spring.datasource.url=jdbc:mysql://localhost:3306/your_database_name
-    spring.datasource.username=your_username
-    spring.datasource.password=your_password
+3. Configure the database in `WebConfig`:
+    ```sh
+    dataSource.setUrl("jdbc:mysql://localhost:3306/{your_database_name}?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC");
+    dataSource.setUsername("{your_database_username}");
+    dataSource.setPassword("your_database_password");
     ```
 
 4. Run the application:
