@@ -221,36 +221,29 @@
             text-decoration: underline;
         }
     </style>
+    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
     <script th:inline="javascript">
         document.addEventListener('DOMContentLoaded', function () {
             const editButton = document.getElementById('editButton');
             const hideButton = document.getElementById('hideButton');
             const editForm = document.getElementById('editForm');
 
-
             hideButton.style.display = 'none';
             editButton.addEventListener('click', function () {
                 editForm.style.display = 'block';
                 editButton.style.display = 'none';
                 hideButton.style.display = 'inline-block';
+                CKEDITOR.replace('editContent');
             });
 
             hideButton.addEventListener('click', function () {
                 editForm.style.display = 'none';
                 editButton.style.display = 'inline-block';
                 hideButton.style.display = 'none';
+                CKEDITOR.instances.editContent.destroy();
             });
-
-            // const commentButton = document.getElementById('commentButton');
-            // const commentForm = document.getElementById('commentForm');
-            // commentForm.style.display = 'none';
-            //
-            // commentButton.addEventListener('click', function () {
-            //     commentForm.style.display = 'block';
-            // });
         });
     </script>
-
 </head>
 
 <body>
@@ -282,7 +275,7 @@
     <div class="post-header">
         <div th:if="${blogID}">
             <h1 th:text="${blogID.title}"></h1>
-            <p th:text="${blogID.content}"></p>
+            <p th:utext="${blogID.content}"></p>
             <p th:text="'Written by: ' + ${blogUsername}"></p>
             <div th:if="${blogUsername == username}">
                 <div class="post-controls">
@@ -308,12 +301,12 @@
         <div class="comment-item" th:each="comment : ${comments}">
             <h3 th:text="${usernameMap[comment.userid]} + ' says:'"></h3>
             <p th:text="${#dates.format(comment.datetime, 'dd/MM/yyyy HH:mm')}"></p>
-            <p th:text="${comment.comment}"></p>
+            <p th:utext="${comment.comment}"></p>
         </div>
     </div>
 
     <div>
-<!--        <button id="commentButton" class="btn btn-primary">Comment</button>-->
+        <!--        <button id="commentButton" class="btn btn-primary">Comment</button>-->
         <form id="commentForm" th:action="@{'/blog/' + ${blogUsername} + '/' + ${blogID.id} + '/comment'}" th:object="${newcomment}" method="POST" class="comment-form">
             <div class="form-group">
                 <label for="commentContent">Enter Comment</label>
@@ -341,4 +334,3 @@
 </body>
 
 </html>
-
